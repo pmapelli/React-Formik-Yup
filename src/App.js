@@ -1,6 +1,25 @@
 import React from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import MaskedInput from "react-text-mask";
+
+const phoneNumberMask = [
+    "(",
+    /[1-9]/,
+    /\d/,
+    ")",
+    " ",
+    /\d/,
+    /\d/,
+    /\d/,
+    /\d/,
+    /\d/,
+    "-",
+    /\d/,
+    /\d/,
+    /\d/,
+    /\d/
+  ];
 
 class App extends React.Component {
   render() {
@@ -8,7 +27,7 @@ class App extends React.Component {
             <Formik               
                 initialValues={{
                     name: '',
-                    lastName: '',
+                    email: '',
                     age: '',
                     phone: '' 
                 }}             
@@ -16,16 +35,18 @@ class App extends React.Component {
                     name: Yup.string()
                         .required('Nome é obrigatório'),
                     email: Yup.string()
-                        .email('Email invalido')
-                        .required('Email é obrigatório'),
+                        .required('Email é obrigatório')    
+                        .email('Email invalido'),
                     age: Yup.number()
-                        .required('Idade é obrigatório'),
+                        .required('Idade é obrigatório')
+                        .typeError('Idade precisa ser um número')
+                        .positive()
+                        .integer(),
                     phone: Yup.string()
-                        .required('Telefone é obrigatório') 
-                        .matches('/^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/', 'Número de telefone inválido')                                                         
+                        .required('Telefone é obrigatório'),
                 })}
-                onSubmit={fields => {
-                    alert('Sucesso!! :-)\n\n' + JSON.stringify(fields, null, 4))
+                onSubmit={ () => {
+                    alert('Cadastro Finalizado!')
                 }}
                 render={({ errors, status, touched }) => (
                     <Form>
@@ -41,14 +62,22 @@ class App extends React.Component {
                         </div> 
                         <div className="form-group">
                             <label htmlFor="age">Idade *</label>
-                            <Field name="age" type="text" className={'form-control' + (errors.age && touched.age ? ' is-invalid' : '')} />
+                            <Field name="age" type="string" className={'form-control' + (errors.age && touched.age ? ' is-invalid' : '')} />
                             <ErrorMessage name="age" component="div" className="invalid-feedback" />
                         </div>       
                         <div className="form-group">
                             <label htmlFor="phone">Telefone *</label>
-                            <Field name="phone" type="text" className={'form-control' + (errors.phone && touched.phone ? ' is-invalid' : '')} />
+                            <Field name="phone" render={({ field }) => (
+                            <MaskedInput
+                                {...field}
+                                mask={phoneNumberMask}
+                                id="phone"
+                                type="string"
+                                className={'form-control' + (errors.phone && touched.phone ? ' is-invalid' : '')}
+                            />
+                        )} />
                             <ErrorMessage name="phone" component="div" className="invalid-feedback" />
-                        </div>            
+                        </div>
                         <div className="form-group">
                             <button type="submit" className="btn btn-primary mr-2">Cadastrar</button>
                             <button type="reset" className="btn btn-secondary">Limpar</button>
