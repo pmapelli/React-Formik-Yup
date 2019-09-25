@@ -12,6 +12,6 @@ O formulário possui os seguintes campos:
     - Idade;
     - Telefone;
    
-Extensões utilizadas:
+# Extensões utilizadas:
 - formik
 - yup
