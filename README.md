@@ -13,5 +13,5 @@ O formulário possui os seguintes campos:
     - Telefone;
    
 # Extensões utilizadas:
-- formik
-- yup
+- Formik
+- Yup
