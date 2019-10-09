@@ -24,7 +24,7 @@ O formulário possui os seguintes campos:
 
 > Formulário preenchido
 
-![form](https://user-images.githubusercontent.com/15129047/66526651-ddb0eb80-eacf-11e9-927c-d717d55c8e56.png)
+![form](https://user-images.githubusercontent.com/15129047/66526861-6f205d80-ead0-11e9-8f47-b2b176d8a9ad.png)
 
 > Validações de erro
 
